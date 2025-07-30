@@ -5,6 +5,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:local="using:DigitalSignaturesVisualizer"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:wct="using:CommunityToolkit.WinUI"
 	xmlns:wctcontrols="using:CommunityToolkit.WinUI.Controls"
 	xmlns:wctconverters="using:CommunityToolkit.WinUI.Converters"
 	AllowDrop="True"
@@ -14,12 +15,17 @@
 
 	<UserControl.Resources>
 		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
 
-			<x:Double x:Key="SettingsCardWrapThreshold">300</x:Double>
-			<x:Double x:Key="SettingsCardWrapNoIconThreshold">180</x:Double>
+				<ResourceDictionary Source="ms-appx:///CustomStyles.xaml" />
 
-			<wctconverters:BoolNegationConverter x:Key="BoolNegationConverter" />
+				<ResourceDictionary>
+					<x:Double x:Key="SettingsCardWrapThreshold">300</x:Double>
+					<x:Double x:Key="SettingsCardWrapNoIconThreshold">180</x:Double>
+					<wctconverters:BoolNegationConverter x:Key="BoolNegationConverter" />
+				</ResourceDictionary>
 
+			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 	</UserControl.Resources>
 
@@ -41,104 +47,94 @@
 			</TitleBar.IconSource>
 		</TitleBar>
 
-		<ScrollViewer Grid.Row="1">
+		<StackPanel
+			x:Name="DropIndicatorView"
+			Grid.Row="1"
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			x:Load="{x:Bind ViewModel.PathIsSet, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+			Spacing="12"
+			Visibility="Collapsed">
+			<FontIcon
+				FontSize="64"
+				Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+				Glyph="&#xE8FF;" />
+			<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Drop an executable here" />
+		</StackPanel>
 
-			<Grid>
+		<Grid x:Name="DigitalSinaturesView" Grid.Row="1">
 
-				<StackPanel
-					x:Name="DropIndicatorView"
-					HorizontalAlignment="Center"
-					VerticalAlignment="Center"
-					x:Load="{x:Bind ViewModel.PathIsSet, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-					Spacing="12">
-					<FontIcon
-						FontSize="64"
-						Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-						Glyph="&#xE8FF;" />
-					<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Drop an executable here" />
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<Grid
+				Grid.Row="0"
+				Padding="24"
+				ColumnSpacing="8">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+
+				<StackPanel Grid.Column="1" Spacing="4">
+					<TextBlock
+						Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+						Style="{StaticResource CaptionTextBlockStyle}"
+						Text="Name of signer" />
+					<TextBlock Text="Microsoft Corporation" TextTrimming="CharacterEllipsis" />
+					<TextBlock
+						Margin="0,12,0,0"
+						Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+						Style="{StaticResource CaptionTextBlockStyle}"
+						Text="Digest algorithm" />
+					<TextBlock Text="SHA256" TextTrimming="CharacterEllipsis" />
+					<TextBlock
+						Margin="0,12,0,0"
+						Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+						Style="{StaticResource CaptionTextBlockStyle}"
+						Text="Timestamp" />
+					<TextBlock Text="Sat, Sep 30, 2023 10:47:01 AM" TextTrimming="CharacterEllipsis" />
+
 				</StackPanel>
 
-				<StackPanel
-					x:Name="DigitalSinaturesView"
-					Margin="12"
-					x:Load="{x:Bind ViewModel.PathIsSet, Mode=OneWay}"
-					Spacing="4">
-					<wctcontrols:SettingsExpander Description="Sat, Sep 30, 2023 10:47:01 AM" Header="Microsoft Corporation">
-						<wctcontrols:SettingsExpander.HeaderIcon>
-							<FontIcon
-								Foreground="{ThemeResource SystemFillColorSuccessBrush}"
-								Glyph="&#xE930;"
-								ToolTipService.ToolTip="This digital signature is OK." />
-						</wctcontrols:SettingsExpander.HeaderIcon>
-						<Button Content="Details" />
-						<wctcontrols:SettingsExpander.Items>
-							<wctcontrols:SettingsCard ContentAlignment="Left">
-								<StackPanel>
-									<TextBlock
-										Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-										Style="{StaticResource CaptionTextBlockStyle}"
-										Text="E-mail:" />
-									<TextBlock Text="example@microsoft.com" />
-									<TextBlock
-										Margin="0,8,0,0"
-										Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-										Style="{StaticResource CaptionTextBlockStyle}"
-										Text="Valid from:" />
-									<TextBlock Text="Sat, Sep 30, 2023 10:47:01 AM" />
-									<TextBlock
-										Margin="0,8,0,0"
-										Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-										Style="{StaticResource CaptionTextBlockStyle}"
-										Text="Valid to:" />
-									<TextBlock Text="Sat, Sep 30, 2023 10:47:01 AM" />
-								</StackPanel>
-							</wctcontrols:SettingsCard>
-							<wctcontrols:SettingsCard
-								Description="Sat, Sep 30, 2023 10:47:01 AM"
-								Header="Microsoft Time-Stamp Service"
-								IsClickEnabled="True" />
-						</wctcontrols:SettingsExpander.Items>
-					</wctcontrols:SettingsExpander>
-					<wctcontrols:SettingsExpander Description="Sat, Sep 30, 2023 10:47:01 AM" Header="Microsoft Corporation">
-						<wctcontrols:SettingsExpander.HeaderIcon>
-							<FontIcon
-								Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-								Glyph="&#xEA39;"
-								ToolTipService.ToolTip="This digital signature is not valid." />
-						</wctcontrols:SettingsExpander.HeaderIcon>
-						<Button Content="Details" />
-						<wctcontrols:SettingsExpander.Items>
-							<wctcontrols:SettingsCard ContentAlignment="Left">
-								<StackPanel Margin="0,0,0,0">
-									<TextBlock
-										Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-										Style="{StaticResource CaptionTextBlockStyle}"
-										Text="E-mail:" />
-									<TextBlock Text="example@microsoft.com" />
-									<TextBlock
-										Margin="0,8,0,0"
-										Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-										Style="{StaticResource CaptionTextBlockStyle}"
-										Text="Valid from:" />
-									<TextBlock Text="Sat, Sep 30, 2023 10:47:01 AM" />
-									<TextBlock
-										Margin="0,8,0,0"
-										Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-										Style="{StaticResource CaptionTextBlockStyle}"
-										Text="Valid to:" />
-									<TextBlock Text="Sat, Sep 30, 2023 10:47:01 AM" />
-								</StackPanel>
-							</wctcontrols:SettingsCard>
-							<wctcontrols:SettingsCard
-								Description="Sat, Sep 30, 2023 10:47:01 AM"
-								Header="Microsoft Time-Stamp Service"
-								IsClickEnabled="True" />
-						</wctcontrols:SettingsExpander.Items>
-					</wctcontrols:SettingsExpander>
-				</StackPanel>
+				<Button
+					Grid.Column="2"
+					MinWidth="120"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Bottom"
+					Content="Details" />
 			</Grid>
 
-		</ScrollViewer>
+			<Rectangle
+				Grid.Row="1"
+				Height="1"
+				Margin="20,0"
+				Fill="{ThemeResource DividerStrokeColorDefaultBrush}" />
 
+			<ScrollViewer Grid.Row="2">
+
+				<StackPanel Margin="24" Spacing="4">
+
+					<TextBlock
+						Margin="0,0,0,8"
+						Style="{StaticResource BodyStrongTextBlockStyle}"
+						Text="Digital signatures:" />
+
+					<ListView wct:ListViewExtensions.AlternateColor="AliceBlue">
+						<ListView.Items>
+							<ListViewItem Content="A" />
+							<ListViewItem Content="A" />
+							<ListViewItem Content="A" />
+							<ListViewItem Content="A" />
+						</ListView.Items>
+					</ListView>
+				</StackPanel>
+
+			</ScrollViewer>
+		</Grid>
 	</Grid>
 </UserControl>

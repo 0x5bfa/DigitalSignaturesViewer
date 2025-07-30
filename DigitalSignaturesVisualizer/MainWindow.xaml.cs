@@ -18,12 +18,7 @@ namespace DigitalSignaturesVisualizer
 			AppWindow.Resize(new(600, 800));
 
 			if (AppWindow.Presenter is OverlappedPresenter overlapped)
-			{
-				overlapped.IsMaximizable = false;
-				overlapped.IsMinimizable = true;
-				overlapped.IsResizable = false;
 				overlapped.IsAlwaysOnTop = true;
-			}
 		}
 	}
 }
