@@ -13,18 +13,6 @@
 	</Window.SystemBackdrop>
 
 	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="32" />
-			<RowDefinition Height="*" />
-		</Grid.RowDefinitions>
-
-		<StackPanel Padding="16,0" Orientation="Horizontal">
-			<TextBlock
-				VerticalAlignment="Center"
-				Style="{StaticResource CaptionTextBlockStyle}"
-				Text="Digital signatures visualizer" />
-		</StackPanel>
-
-		<local:DigitalSignaturesView Grid.Row="1" />
+		<local:DigitalSignaturesView />
 	</Grid>
 </Window>

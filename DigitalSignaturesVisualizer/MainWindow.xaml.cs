@@ -1,8 +1,10 @@
 // Copyright (c) 0x5BFA. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Windows.Graphics;
 
 namespace DigitalSignaturesVisualizer
 {
@@ -13,7 +15,7 @@ namespace DigitalSignaturesVisualizer
 			InitializeComponent();
 
 			ExtendsContentIntoTitleBar = true;
-			AppWindow.Resize(new(480, 600));
+			AppWindow.Resize(new(600, 800));
 
 			if (AppWindow.Presenter is OverlappedPresenter overlapped)
 			{

@@ -7,7 +7,7 @@ namespace DigitalSignaturesVisualizer
 {
 	public partial class App : Application
 	{
-		public Window? MainWindow { get; set; }
+		public static Window MainWindow { get; set; } = null!;
 
 		public App()
 		{
