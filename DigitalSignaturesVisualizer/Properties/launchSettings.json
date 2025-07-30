@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DigitalSignaturesVisualizer (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "DigitalSignaturesVisualizer (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
