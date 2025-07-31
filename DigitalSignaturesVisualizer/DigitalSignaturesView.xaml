@@ -53,8 +53,7 @@
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center"
 			x:Load="{x:Bind ViewModel.PathIsSet, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-			Spacing="12"
-			Visibility="Collapsed">
+			Spacing="12">
 			<FontIcon
 				FontSize="64"
 				Foreground="{ThemeResource TextFillColorTertiaryBrush}"
@@ -62,7 +61,10 @@
 			<TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Drop an executable here" />
 		</StackPanel>
 
-		<Grid x:Name="DigitalSinaturesView" Grid.Row="1">
+		<Grid
+			x:Name="DigitalSinaturesView"
+			Grid.Row="1"
+			x:Load="{x:Bind ViewModel.PathIsSet, Mode=OneWay}">
 
 			<Grid.RowDefinitions>
 				<RowDefinition Height="Auto" />
@@ -124,13 +126,24 @@
 						Style="{StaticResource BodyStrongTextBlockStyle}"
 						Text="Digital signatures:" />
 
-					<ListView wct:ListViewExtensions.AlternateColor="AliceBlue">
-						<ListView.Items>
-							<ListViewItem Content="A" />
-							<ListViewItem Content="A" />
-							<ListViewItem Content="A" />
-							<ListViewItem Content="A" />
-						</ListView.Items>
+					<ListView Margin="-16,0" ItemsSource="{x:Bind ViewModel.Items, Mode=OneWay}">
+						<ListView.ItemTemplate>
+							<DataTemplate x:DataType="local:DigitalSignatureItem">
+								<Grid>
+									<TextBlock Text="{x:Bind Issuer}" />
+									<Rectangle
+										Grid.Row="1"
+										Height="1"
+										Margin="-10,0"
+										Canvas.ZIndex="100"
+										Fill="{ThemeResource DividerStrokeColorDefaultBrush}">
+										<Rectangle.RenderTransform>
+											<TranslateTransform X="0" Y="19" />
+										</Rectangle.RenderTransform>
+									</Rectangle>
+								</Grid>
+							</DataTemplate>
+						</ListView.ItemTemplate>
 					</ListView>
 				</StackPanel>
 

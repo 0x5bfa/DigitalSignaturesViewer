@@ -46,9 +46,39 @@ namespace DigitalSignaturesVisualizer
 			// Example data
 			Items.Add(new DigitalSignatureItem
 			{
-				Issuer = "Example Issuer 1",
+				Issuer = "Microsoft Corporation",
 				DigestAlgorithm = "SHA256",
 				Timestamp = DateTime.Now.ToString("o")
+			});
+			Items.Add(new DigitalSignatureItem
+			{
+				Issuer = "Example Issuer 2",
+				DigestAlgorithm = "SHA512",
+				Timestamp = DateTime.Now.AddMinutes(-10).ToString("o")
+			});
+			Items.Add(new DigitalSignatureItem
+			{
+				Issuer = "Example Issuer 2",
+				DigestAlgorithm = "SHA512",
+				Timestamp = DateTime.Now.AddMinutes(-10).ToString("o")
+			});
+			Items.Add(new DigitalSignatureItem
+			{
+				Issuer = "Example Issuer 2",
+				DigestAlgorithm = "SHA512",
+				Timestamp = DateTime.Now.AddMinutes(-10).ToString("o")
+			});
+			Items.Add(new DigitalSignatureItem
+			{
+				Issuer = "Example Issuer 2",
+				DigestAlgorithm = "SHA512",
+				Timestamp = DateTime.Now.AddMinutes(-10).ToString("o")
+			});
+			Items.Add(new DigitalSignatureItem
+			{
+				Issuer = "Example Issuer 2",
+				DigestAlgorithm = "SHA512",
+				Timestamp = DateTime.Now.AddMinutes(-10).ToString("o")
 			});
 			Items.Add(new DigitalSignatureItem
 			{
